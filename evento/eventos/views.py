@@ -55,13 +55,18 @@ def gerenciar_evento(request):
 
     if request.method == "GET":
         nome = request.GET.get('nome')
+        dt_inicio = request.GET.get('dt_inicio')
+
         eventos = Evento.objects.filter(criador=request.user)
 
         # TODO: Realizar outros filtros
 
-        if nome:
-            eventos = eventos.filter(nome__contains=nome)
-        
+        if nome or dt_inicio:    
+            if dt_inicio:
+                eventos = eventos.filter(data_inicio__gte=dt_inicio)    
+            if nome:
+                eventos = eventos.filter(nome__contains=nome)
+         
         return render(request, 'gerenciar_evento.html', {'eventos': eventos})
 
 @login_required     
