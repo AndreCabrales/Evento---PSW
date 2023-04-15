@@ -6,6 +6,8 @@ from django.contrib.messages import constants
 from django.urls import reverse
 from django.contrib import auth
 
+from django.contrib.auth import logout
+
 
 # Create your views here.
 
@@ -40,7 +42,6 @@ def cadastro(request):
 
         return redirect(reverse('login'))
 
-
 def login(request):
 
     if request.method == "GET":
@@ -63,6 +64,9 @@ def login(request):
 
         return redirect('/eventos/novo_evento/')
                                  
-
+def lougout_user(request):
+    logout(request)
+    
+    return render (request, 'login.html') 
     
         
